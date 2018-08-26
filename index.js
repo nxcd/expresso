@@ -11,7 +11,7 @@ const middlewares = require('./middlewares')
 
 module.exports = (fn) => {
   return async (options, environment) => {
-    if (environment === env.TEST) {
+    if (environment !== env.TEST) {
       process.on('unhandledRejection', (err) => {
         console.error(err)
         process.exit(1)
