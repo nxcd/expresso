@@ -51,3 +51,4 @@ module.exports = (fn) => {
 
 module.exports.server = require('./server')
 module.exports.HttpError = require('./errors/http-error')
+module.exports.express = express
