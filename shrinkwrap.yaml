@@ -5,6 +5,7 @@ dependencies:
   helmet: 3.13.0
   lodash.merge: 4.6.1
   morgan: 1.9.0
+  sugar-env: 1.4.0
 packages:
   /accepts/1.3.5:
     dependencies:
@@ -530,6 +531,10 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+  /sugar-env/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/Y6z8Wt7JS+m8ZSQDYPrHs5fmoyhT2/C3v0fFy8fHINl6g9H3jxJZJZQKasZkWayBmLu+iKsGb5+2az/kjaUog==
   /type-is/1.6.16:
     dependencies:
       media-typer: 0.3.0
@@ -562,7 +567,7 @@ packages:
     resolution:
       integrity: sha512-rx3GzJlgEeZ08MIcDsU2vY2B1QEriUKJTSiNHHUIem6eg9pzVOr2TL3Y4Pd6TMAM5D5azGjcxqI62piITBDHVg==
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 8
+shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   body-parser: ^1.18.3
@@ -571,3 +576,4 @@ specifiers:
   helmet: ^3.13.0
   lodash.merge: ^4.6.1
   morgan: ^1.9.0
+  sugar-env: ^1.4.0

@@ -7,9 +7,16 @@ const factory = () => (err, req, res, next) => {
     return next(err)
   }
 
+  const validations = Object.keys(err.validations)
+    .reduce((result, key) => {
+      const validation = err.validations[key]
+      result.push(...validation)
+      return result
+    }, [])
+
   return next(new HttpError.UnprocessableEntity({
     message: err.message,
-    validations: err.validations
+    validations
   }))
 }
 

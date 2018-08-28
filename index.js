@@ -40,9 +40,9 @@ module.exports = (fn) => {
 
     app.use('*', routes.unmatched.factory())
 
-    app.use(middlewares.stderr.factory())
-    app.use(middlewares.normalizer.factory())
     app.use(middlewares.validationErrors.factory())
+    app.use(middlewares.normalizer.factory())
+    app.use(middlewares.stderr.factory())
     app.use(middlewares.renderer.factory(environment))
 
     return app
