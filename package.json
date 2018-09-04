@@ -8,6 +8,10 @@
     "server",
     "bootstrap"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/rjmunhoz/expresso.git"
+  },
   "author": "Rogério Munhoz <rogerio.j.munhoz@gmail.com>",
   "license": "MIT",
   "dependencies": {
