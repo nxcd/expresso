@@ -19,5 +19,9 @@
     "lodash.merge": "^4.6.1",
     "morgan": "^1.9.0",
     "sugar-env": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=9",
+    "pnpm": ">=2.15"
   }
 }
