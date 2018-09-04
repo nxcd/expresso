@@ -1,6 +1,7 @@
 'use strict'
 
 const env = require('sugar-env')
+const cors = require('cors')
 const helmet = require('helmet')
 const express = require('express')
 const merge = require('lodash.merge')
@@ -23,12 +24,19 @@ module.exports = (fn) => {
       version: env.get('GIT_RELEASE'),
       morgan: {
         format: ':method :url :status :: :response-time ms',
+      },
+      cors: {
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'PATCH'],
+        preflightContinue: false,
+        optionsSuccessStatus: 204
       }
     }, options)
 
     const app = express()
 
     app.use(helmet())
+    app.use(cors(config.cors))
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(middlewares.morgan.factory(config.morgan))
