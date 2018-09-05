@@ -7,8 +7,8 @@ const HttpError = require('../errors/http-error')
  * @return  {Boolean}   Whether validation errors should be displayed.
  */
 const shouldDisplayValidationErrors = (err) => {
-  return err instanceof HttpError.UnprocessableEntity
-      && err.validations.length > 0
+  return err instanceof HttpError.UnprocessableEntity &&
+      err.validations.length > 0
 }
 
 /**
@@ -36,7 +36,7 @@ const factory = (environment) => {
       : undefined
 
     res.status(status)
-       .json({ status, error: { code, message, stack, validations } })
+      .json({ status, error: { code, message, stack, validations } })
   }
 }
 
