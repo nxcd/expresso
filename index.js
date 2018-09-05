@@ -23,7 +23,7 @@ module.exports = (fn) => {
       name: env.get(['APP_NAME', 'npm_package_name'], 'app'),
       version: env.get('GIT_RELEASE'),
       morgan: {
-        format: ':method :url :status :: :response-time ms',
+        format: ':method :url :status :: :response-time ms'
       },
       cors: {
         origin: '*',

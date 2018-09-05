@@ -13,7 +13,7 @@
     "url": "git+ssh://git@gitlab.com/rjmunhoz/expresso.git"
   },
   "scripts": {
-    "lint": "eslint '*/**.js'"
+    "lint": "eslint ."
   },
   "author": "Rogério Munhoz <rogerio.j.munhoz@gmail.com>",
   "license": "MIT",
