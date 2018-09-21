@@ -5,6 +5,21 @@ const jwksRsa = require('jwks-rsa')
 const expressJwt = require('express-jwt')
 const HttpError = require('./errors/http-error')
 
+const isPathInScope = (path, scope, { separator = '.', wildcard = '*', wildcardIsRoot = true } = {}) => {
+  return path.split(separator)
+    .reduce((possibilities, segment) => {
+      const possibility = possibilities.slice(-1).length
+        ? `${possibilities.slice(-1)[0]}${separator}${segment}`
+        : segment
+
+      possibilities.push(possibility)
+      return possibilities
+    }, [])
+    .map(possibility => (possibility !== path) || wildcardIsRoot ? `${possibility}${separator}${wildcard}` : possibility)
+    .concat([wildcard, path])
+    .reduce((result, possibility) => result || scope.includes(possibility), false)
+}
+
 /**
  * @param   {string|array.<string>} expected  Expected types (user and/or service).
  * @returns {Function}                        Middleware
@@ -65,8 +80,7 @@ const scopes = (expected) => {
       }))
     }
 
-    const fulfilledScopes = expected.filter((scope) => req.user.scopes.includes(scope))
-    const unfulfilledScopes = expected.filter((scope) => !req.user.scopes.includes(scope))
+    const unfulfilledScopes = expected.filter((scope) => !isPathInScope(scope, req.user.scopes))
 
     if (unfulfilledScopes.length > 0) {
       return next(new HttpError.Unauthorized({
