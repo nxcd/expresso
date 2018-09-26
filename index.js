@@ -40,7 +40,7 @@ module.exports = (fn) => {
     app.use(bodyParser.json())
     app.use(middlewares.onBehalfOf.factory())
     app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(middlewares.morgan.factory(config.morgan))
+    app.use(middlewares.morgan.factory(config.morgan, environment))
 
     app.get('/ping', routes.ping.factory(config))
     app.get('/teapot', routes.teapot.factory())
