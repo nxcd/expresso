@@ -6,5 +6,6 @@ module.exports = {
   renderer: require('./renderer'),
   normalizer: require('./normalizer'),
   onBehalfOf: require('./on-behalf-of'),
-  validationErrors: require('./validation-errors')
+  validationErrors: require('./validation-errors'),
+  validationSchema: require('./validation-schema')
 }

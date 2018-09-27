@@ -62,3 +62,4 @@ module.exports.express = express
 module.exports.auth = require('./auth')
 module.exports.server = require('./server')
 module.exports.HttpError = require('./errors/http-error')
+module.exports.validate = middlewares.validationSchema.factory
