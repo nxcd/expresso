@@ -1,6 +1,6 @@
 {
   "name": "@rjmunhoz/expresso",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Very opinated express bootstrap as a module",
   "main": "index.js",
   "keywords": [
