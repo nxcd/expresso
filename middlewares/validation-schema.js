@@ -16,12 +16,12 @@ const humanReadableErrors = (errors) => errors.map(error => {
   const text = (reason === REASON_REQUIRED)
     ? REASON_REQUIRED_MESSAGE
     : message.replace('should', 'must')
-             .replace(/"/g, '\`')
+             .replace(/"/g, '`')
 
   return { path, message: `'${path}' ${text}`, reason }
 })
 
-const factory = (schema, { coerce = true, defaults = true } = { }) => {
+const factory = (schema, { coerce = true, defaults = true, property = 'body' } = { }) => {
   const ajv = new Ajv({
     coerceTypes: coerce,
     useDefaults: defaults,
@@ -32,7 +32,7 @@ const factory = (schema, { coerce = true, defaults = true } = { }) => {
 
   return (req, res, next) => {
     const validateBody = (validate) => {
-      if (validate(req.body || { })) {
+      if (validate(req[property] || { })) {
         return next()
       }
 
@@ -48,5 +48,8 @@ const factory = (schema, { coerce = true, defaults = true } = { }) => {
            .catch(next)
   }
 }
+
+factory.body = (schema, options) => factory(schema, { ...options, property: 'body' })
+factory.query = (schema, options) => factory(schema, { ...options, property: 'query' })
 
 module.exports = { factory }
