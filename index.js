@@ -38,7 +38,7 @@ module.exports = (fn) => {
       },
       cors: {
         origin: '*',
-        methods: ['GET', 'POST', 'PUT', 'PATCH'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         preflightContinue: false,
         optionsSuccessStatus: 204
       }
