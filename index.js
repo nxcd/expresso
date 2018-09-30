@@ -22,6 +22,17 @@ module.exports = (fn) => {
     const config = merge({
       name: env.get(['APP_NAME', 'npm_package_name'], 'app'),
       version: env.get('GIT_RELEASE'),
+      deeptrace: {
+        dsn: env.get('DEEPTRACE_DSN'),
+        shouldSendCallback: () => true,
+        timeout: parseInt(env.get('DEEPTRACE_TIMEOUT', 3000)),
+        tags: {
+          environment,
+          service: env.get('DEEPTRACE_TAGS_SERVICE', options.name),
+          commit: env.get(['DEEPTRACE_TAGS_COMMIT', 'GIT_COMMIT']),
+          release: env.get(['DEEPTRACE_TAGS_RELEASE', 'GIT_RELEASE'])
+        }
+      },
       morgan: {
         format: ':method :url :status :: :response-time ms'
       },
@@ -35,6 +46,7 @@ module.exports = (fn) => {
 
     const app = express()
 
+    app.use(middlewares.deeptrace.factory(config.deeptrace))
     app.use(helmet())
     app.use(cors(config.cors))
     app.use(bodyParser.json())

@@ -3,6 +3,7 @@ dependencies:
   body-parser: 1.18.3
   cors: 2.8.4
   debug: 3.1.0
+  deeptrace-express: 1.2.3
   express: 4.16.3
   express-jwt: 5.3.1
   helmet: 3.13.0
@@ -469,10 +470,33 @@ packages:
       ms: 2.0.0
     resolution:
       integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+  /debug/3.2.5:
+    dependencies:
+      ms: 2.1.1
+    dev: false
+    resolution:
+      integrity: sha512-D61LaDQPQkxJ5AUM2mbSJRbPkNs/TmdmOeLAi1hgDkpDfIfetSrjmWhccwtuResSwMbACjx/xXQofvM9CE/aeg==
   /deep-is/0.1.3:
     dev: true
     resolution:
       integrity: sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
+  /deeptrace-client/1.0.6:
+    dev: false
+    engines:
+      '0': node >= 7.6.0
+    resolution:
+      integrity: sha512-rod+KPHWgLKa5lhohPkALx18yjj/NJWvXX3bc7G/8FofOeTS86xHusyVdnWVSJNqXmeP2Cd4O20C/0vw97nizw==
+  /deeptrace-express/1.2.3:
+    dependencies:
+      debug: 3.2.5
+      deeptrace-client: 1.0.6
+      lodash.merge: 4.6.1
+      uuid: 3.3.2
+    dev: false
+    engines:
+      '0': node >= 7.6.0
+    resolution:
+      integrity: sha512-HrT+K8UEaAnpp7rrpmEi4SbjS5abyHmGOS7NUsihFMMM+wzRU4b0MfAC5v9fEWrur5HzA5j27BG1IrJQb0LgCw==
   /del/2.2.2:
     dependencies:
       globby: 5.0.0
@@ -2279,6 +2303,7 @@ specifiers:
   body-parser: ^1.18.3
   cors: ^2.8.4
   debug: ^3.1.0
+  deeptrace-express: ^1.2.3
   eslint: ^5.5.0
   eslint-config-standard: ^12.0.0
   eslint-plugin-import: ^2.14.0
