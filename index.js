@@ -34,7 +34,7 @@ module.exports = (fn) => {
         }
       },
       morgan: {
-        format: ':method :url :status :: :response-time ms'
+        format: ':method :url :status :: :response-time ms :: :res[deeptrace-id]'
       },
       cors: {
         origin: '*',
