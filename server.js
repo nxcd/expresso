@@ -1,10 +1,11 @@
 'use strict'
 
 const http = require('http')
+const path = require('path')
 const env = require('sugar-env')
 const cfonts = require('cfonts')
 const merge = require('lodash.merge')
-const { makeConfig } = require('./index')
+const { makeConfig } = require(path.join(__dirname, 'index.js'))
 
 /**
  * @param  {Function} appFactory  App factory.
