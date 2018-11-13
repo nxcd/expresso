@@ -14,8 +14,7 @@ const start = async (appFactory, options) => {
   const config = merge(
     { server: { binding: { ip: env.get('SERVER_BINDING_IP', '0.0.0.0') } } },
     { server: { binding: { port: parseInt(env.get('SERVER_BINDING_PORT', 3000)) } } },
-    makeConfig(options, env.current),
-
+    makeConfig(options, env.current)
   )
 
   const server = http.createServer(await appFactory(config, env.current))
