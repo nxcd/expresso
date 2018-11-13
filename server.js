@@ -11,6 +11,7 @@ const merge = require('lodash.merge')
  */
 const start = async (appFactory, options) => {
   const config = merge(
+    { name: 'app' },
     { server: { binding: { ip: env.get('SERVER_BINDING_IP', '0.0.0.0') } } },
     { server: { binding: { port: parseInt(env.get('SERVER_BINDING_PORT', 3000)) } } },
     options
