@@ -10,6 +10,33 @@ const bodyParser = require('body-parser')
 const routes = require('./routes')
 const middlewares = require('./middlewares')
 
+function makeConfig (options, environment) {
+  return merge({
+    name: env.get(['APP_NAME', 'npm_package_name'], 'app'),
+    version: env.get('GIT_RELEASE'),
+    deeptrace: {
+      dsn: env.get('DEEPTRACE_DSN'),
+      shouldSendCallback: () => true,
+      timeout: parseInt(env.get('DEEPTRACE_TIMEOUT', 3000)),
+      tags: {
+        environment,
+        service: env.get('DEEPTRACE_TAGS_SERVICE', options.name),
+        commit: env.get(['DEEPTRACE_TAGS_COMMIT', 'GIT_COMMIT']),
+        release: env.get(['DEEPTRACE_TAGS_RELEASE', 'GIT_RELEASE'])
+      }
+    },
+    morgan: {
+      format: ':method :url :status :: :response-time ms :: :res[deeptrace-id]'
+    },
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+      preflightContinue: false,
+      optionsSuccessStatus: 204
+    }
+  }, options)
+}
+
 module.exports = (fn) => {
   return async (options, environment) => {
     if (environment !== env.TEST) {
@@ -19,30 +46,7 @@ module.exports = (fn) => {
       })
     }
 
-    const config = merge({
-      name: env.get(['APP_NAME', 'npm_package_name'], 'app'),
-      version: env.get('GIT_RELEASE'),
-      deeptrace: {
-        dsn: env.get('DEEPTRACE_DSN'),
-        shouldSendCallback: () => true,
-        timeout: parseInt(env.get('DEEPTRACE_TIMEOUT', 3000)),
-        tags: {
-          environment,
-          service: env.get('DEEPTRACE_TAGS_SERVICE', options.name),
-          commit: env.get(['DEEPTRACE_TAGS_COMMIT', 'GIT_COMMIT']),
-          release: env.get(['DEEPTRACE_TAGS_RELEASE', 'GIT_RELEASE'])
-        }
-      },
-      morgan: {
-        format: ':method :url :status :: :response-time ms :: :res[deeptrace-id]'
-      },
-      cors: {
-        origin: '*',
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-        preflightContinue: false,
-        optionsSuccessStatus: 204
-      }
-    }, options)
+    const config = makeConfig(options, environment)
 
     const app = express()
 
@@ -75,3 +79,4 @@ module.exports.auth = require('./auth')
 module.exports.server = require('./server')
 module.exports.HttpError = require('./errors/http-error')
 module.exports.validate = middlewares.validationSchema.factory
+module.exports.makeConfig = makeConfig

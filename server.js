@@ -4,6 +4,7 @@ const http = require('http')
 const env = require('sugar-env')
 const cfonts = require('cfonts')
 const merge = require('lodash.merge')
+const { makeConfig } = require('./index')
 
 /**
  * @param  {Function} appFactory  App factory.
@@ -11,10 +12,10 @@ const merge = require('lodash.merge')
  */
 const start = async (appFactory, options) => {
   const config = merge(
-    { name: 'app' },
     { server: { binding: { ip: env.get('SERVER_BINDING_IP', '0.0.0.0') } } },
     { server: { binding: { port: parseInt(env.get('SERVER_BINDING_PORT', 3000)) } } },
-    options
+    makeConfig(options, env.current),
+
   )
 
   const server = http.createServer(await appFactory(config, env.current))
