@@ -80,9 +80,15 @@ const scopes = (expected, shouldHaveAllScopes = true) => {
       }))
     }
 
-    const matchedScopes = shouldHaveAllScopes ? expected.filter((scope) => !isPathInScope(scope, req.user.scopes)) : expected.filter((scope) => isPathInScope(scope, req.user.scopes))
+    // Checks if all the scopes are filled (no "false" in the array)
+    const fillsAllScopes = () => expected.filter((scope) => !isPathInScope(scope, req.user.scopes)).length <= 0
+    // Checks if at least one scope is filled (at least one "true" in the array)
+    const fillsSomeScopes = () => expected.filter((scope) => isPathInScope(scope, req.user.scopes)).length > 0
+    const satisfied = shouldHaveAllScopes ? fillsAllScopes() : fillsSomeScopes()
 
-    if ((matchedScopes.length > 0 && shouldHaveAllScopes) || (matchedScopes.length <= 0  && !shouldHaveAllScopes)) {
+    // If there's one or more "false" in the result array and the behavior is AND, then fail since there's one unfulfilled scope
+    // Else if it is an OR clause, checks if there's at least one "true" in the array, otherwise fails since there are no filled scopes
+    if (!satisfied) {
       return next(new HttpError.Unauthorized({
         message: format('the following permissions are required: %s', matchedScopes.join(' ')),
         code: 'insufficient_permissions'
