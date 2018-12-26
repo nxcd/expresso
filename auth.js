@@ -61,7 +61,7 @@ const types = (expected) => {
  * @param   {string|array.<string>} expected  Array of expected scopes.
  * @returns {Function}                        Scopes validation middleware.
  */
-const scopes = (expected) => {
+const scopes = (expected, shouldHaveAllScopes = true) => {
   if (!Array.isArray(expected)) {
     return scopes(expected.split(' '))
   }
@@ -80,11 +80,11 @@ const scopes = (expected) => {
       }))
     }
 
-    const unfulfilledScopes = expected.filter((scope) => !isPathInScope(scope, req.user.scopes))
+    const matchedScopes = shouldHaveAllScopes ? expected.filter((scope) => !isPathInScope(scope, req.user.scopes)) : expected.filter((scope) => isPathInScope(scope, req.user.scopes))
 
-    if (unfulfilledScopes.length > 0) {
+    if ((matchedScopes.length > 0 && shouldHaveAllScopes) || (matchedScopes.length <= 0  && !shouldHaveAllScopes)) {
       return next(new HttpError.Unauthorized({
-        message: format('the following permissions are required: %s', unfulfilledScopes.join(' ')),
+        message: format('the following permissions are required: %s', matchedScopes.join(' ')),
         code: 'insufficient_permissions'
       }))
     }
@@ -92,6 +92,9 @@ const scopes = (expected) => {
     next()
   }
 }
+
+scopes.or = (expected) => scopes(expected, false)
+scopes.and = (expected) => scopes(expected, true)
 
 /**
  * @param   {String}  options.jwks.uri
