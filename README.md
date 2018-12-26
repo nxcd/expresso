@@ -128,6 +128,44 @@ The option object is a simple object containing the application configuration th
     - `methods`: `['GET', 'POST', 'PUT', 'PATCH', 'DELETE']`
     - `preflightContinue`: `false`
     - `optionsSuccessStatus`: `204`
+- `jwt`: JWT configuration object
+  - Type: *Object*
+  - Default:
+    - `audience`: JWT audience
+      - Type: *String*
+      - Default: `undefined`
+      - **Required**
+    - `issuer`: JWT issuer
+      - Type: *String*
+      - Default: `undefined`
+      - **Required**
+    - `secret`: JWT Secret (if you want to use secrets instead of JWKS)
+      - Type: *String*
+      - Default: `undefined`
+    - `algorithms`: JWT encryption algorithm
+      - Type: *String*
+      - Default: `[ 'RS256' ]`
+  - `jwks`: JWKS options
+    - Type: *Object*
+    - Default:
+      - `uri`: JWKS key URI
+        - Type: *String*
+        - Default: `undefined`
+      - `cache`: Whether or not JWKS will use cache
+        - Type: *Boolean*
+        - Default: `true`
+      - `requestsPerMinute`: Number of requests per minute the JWKS will accept
+        - Type: *Number*
+        - Default: `6 `
+      - `rateLimit`: If JWKS should be rate limited
+        - Type: *Boolean*
+        - Default: `true`
+
+> **Notes about JWT and JWKS**
+>
+> Expresso provides an wrapper interface for que Express-JWT module, this module accepts both JWKS and secret authentications. If the key `options.jwt.secret` is provided, the middleware **will use the secret as authentication**, otherwise, if the key `options.jwks.uri` is provided, the middleware **will use JWKS as authentication**.
+>
+> However, if both keys are provided, **JWKS has priority over secret authentication**, thus, the JWKS will be used.
 
 Any other keys will be **ignored** by expresso, but they'll be passed to your application anyway; all configs can be overriden by passing an object with the same keys but different values.
 

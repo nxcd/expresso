@@ -109,22 +109,26 @@ scopes.and = (expected) => scopes(expected, true)
  * @param   {String}  options.jwks.requestsPerMinute
  * @param   {String}  options.jwt.audience
  * @param   {String}  options.jwt.issuer
+ * @param   {String}  options.jwt.secret
  * @returns {Object}
  */
 const factory = (options) => {
-  const { jwt: { audience, issuer, algorithms = [ 'RS256' ] } } = options
+  const { jwt: { audience, issuer, algorithms = [ 'RS256' ], secret } } = options
   const { jwks: { uri: jwksUri, cache = true, rateLimit = true } } = options
   const { jwks: { requestsPerMinute: jwksRequestsPerMinute = 6 } } = options
+  let jwks = undefined
 
-  const jwks = jwksRsa.expressJwtSecret(
-    { cache, rateLimit, jwksRequestsPerMinute, jwksUri }
-  )
+  if (jwksUri) {
+    jwks = jwksRsa.expressJwtSecret(
+      { cache, rateLimit, jwksRequestsPerMinute, jwksUri }
+    )
+  }
 
   const jwt = [
     /**
      * Authentication handler
      */
-    expressJwt({ secret: jwks, audience, issuer, algorithms }),
+    expressJwt({ secret: jwks || secret, audience, issuer, algorithms }),
 
     /**
      * Moes
