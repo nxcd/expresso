@@ -26,6 +26,7 @@
       - [Auth Options](#auth-options)
     - [Scopes](#scopes)
       - [Usage](#usage-1)
+    - [Shifting behavior](#shifting-behavior)
     - [Built-in server](#built-in-server)
       - [Usage](#usage-2)
 
@@ -256,6 +257,40 @@ apiFactory(options, environment)
 ```
 
 In both cases the user needs to have both the `yourapp.batch.read` **AND** `yourapp.batch.write` scopes in order for the permittion to work.
+
+### Shifting behavior
+
+By default, scopes are bound with an `AND` clause, which means that **all scopes must match in order to get an successful authorization**. This means that, if a route requires the scopes `users.orders.read` and `users.orders.write`, this clause will only allow an user to pass if he/she has both scopes. However, there's a way to shift this behavior and use an `OR` clause, which means the user does not need to have both scopes if `users.orders.read` or `users.orders.write` is present then the user will be allowed.
+
+In order to do so, you'll need to import `scopes` from the `auth` middleware, but use `scopes.or` instead:
+
+```js
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
+
+const apiFactory = expresso((app, config) => {
+  const {jwt, scopes} = auth.factory(config.auth)
+  app.post('/your-path/:with-params', jwt, scopes.or(['yourapp.batch.read', 'yourapp.batch.write']), middleware)
+})
+
+apiFactory(options, environment)
+  .then(app => app.listen(8080))
+```
+
+You can also explicitly invoke the default `AND` behavior using `scopes.and`:
+
+```js
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
+
+const apiFactory = expresso((app, config) => {
+  const {jwt, scopes} = auth.factory(config.auth)
+  app.post('/your-path/:with-params', jwt, scopes.and(['yourapp.batch.read', 'yourapp.batch.write']), middleware)
+})
+
+apiFactory(options, environment)
+  .then(app => app.listen(8080))
+```
 
 ### Built-in server
 
