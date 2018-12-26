@@ -5,8 +5,8 @@
 [![node](https://img.shields.io/node/v/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
 [![npm](https://img.shields.io/npm/v/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
 [![npm](https://img.shields.io/npm/dt/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
-[![NpmLicense](https://img.shields.io/npm/l/@expresso/expresso.svg)](https://gitlab.com/rjmunhoz/expresso)
-[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)](https://gitlab.com/rjmunhoz/expresso)
+[![NpmLicense](https://img.shields.io/npm/l/@expresso/expresso.svg)](https://github.com/nxcd/expresso)
+[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/nxcd/expresso)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?)](http://standardjs.com)
 
 ## Summary
