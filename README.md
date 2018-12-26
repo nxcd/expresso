@@ -2,10 +2,10 @@
 
 > Simple yet useful opinated express boilerplate as a module
 
-[![node](https://img.shields.io/node/v/@nxcd/expresso.svg)](https://npmjs.com/package/@nxcd/expresso)
-[![npm](https://img.shields.io/npm/v/@nxcd/expresso.svg)](https://npmjs.com/package/@nxcd/expresso)
-[![npm](https://img.shields.io/npm/dt/@nxcd/expresso.svg)](https://npmjs.com/package/@nxcd/expresso)
-[![NpmLicense](https://img.shields.io/npm/l/@nxcd/expresso.svg)](https://gitlab.com/rjmunhoz/expresso)
+[![node](https://img.shields.io/node/v/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
+[![npm](https://img.shields.io/npm/v/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
+[![npm](https://img.shields.io/npm/dt/@expresso/expresso.svg)](https://npmjs.com/package/@expresso/expresso)
+[![NpmLicense](https://img.shields.io/npm/l/@expresso/expresso.svg)](https://gitlab.com/rjmunhoz/expresso)
 [![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)](https://gitlab.com/rjmunhoz/expresso)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?)](http://standardjs.com)
 
@@ -54,7 +54,7 @@ Expresso is an Express wrapper. It contains several pre-built configurations whi
 Expresso exposes a function, this functions receives another function with two arguments, the first argument is an Express app and the second is a configuration object. Then it returns a factory function which will receive an `options` object and a string containing your current environment name (e.g: `production`):
 
 ```js
-const expresso = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   app.post('/your-path/:with-params', middleware, middleware, middleware)
@@ -69,7 +69,7 @@ apiFactory(options, environment)
 This object is an object containing all user configurations you might wanna set. It can be anything, and it'll be passed to your app inside the function.
 
 ```js
-const expresso = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const myUsefulConfig = config.myProp.myValue
@@ -141,8 +141,8 @@ The authentication tool provides full JWT authentication with RSA public key cri
 #### Usage
 
 ```js
-const expresso = require('@nxcd/expresso')
-const { auth } = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const {jwt} = auth.factory(config.auth)
@@ -209,8 +209,8 @@ If the user is not allowed, an 401 status code will be returned.
 **Single scope**:
 
 ```js
-const expresso = require('@nxcd/expresso')
-const { auth } = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const {jwt, scopes} = auth.factory(config.auth)
@@ -228,8 +228,8 @@ You can request multiple scopes to be present in the same route. They **will alw
 You can pass a series of space-delimited strings:
 
 ```js
-const expresso = require('@nxcd/expresso')
-const { auth } = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const {jwt, scopes} = auth.factory(config.auth)
@@ -243,8 +243,8 @@ apiFactory(options, environment)
 Or you can pass an array:
 
 ```js
-const expresso = require('@nxcd/expresso')
-const { auth } = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
+const { auth } = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const {jwt, scopes} = auth.factory(config.auth)
@@ -264,8 +264,8 @@ Expresso comes with a built-in webserver containing some preconfigured options t
 #### Usage
 
 ```js
-const expresso = require('@nxcd/expresso')
-const { auth, server } = require('@nxcd/expresso')
+const expresso = require('@expresso/expresso')
+const { auth, server } = require('@expresso/expresso')
 
 const apiFactory = expresso((app, config) => {
   const {jwt, scopes} = auth.factory(config.auth)
