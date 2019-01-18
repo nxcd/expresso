@@ -11,7 +11,7 @@ const makeConfig = require('./makeConfig')
  * @param  {Function} fn  Function to expresso user can handle the server instance
  * @param  {Object}   options     Config object.
  */
-const start = async (appFactory, fn,options) => {
+const start = async (appFactory, options, fn = () => {}) => {
   const config = merge(
     { server: { binding: { ip: env.get('SERVER_BINDING_IP', '0.0.0.0') } } },
     { server: { binding: { port: parseInt(env.get('SERVER_BINDING_PORT', 3000)) } } },
