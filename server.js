@@ -20,7 +20,7 @@ const start = async (appFactory, options, fn = () => {}) => {
 
   const server = http.createServer(await appFactory(config, env.current))
 
-  await fn(server)
+  await fn(server, config)
 
   server.on('listening', () => {
     const addr = server.address()

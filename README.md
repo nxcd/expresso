@@ -331,9 +331,10 @@ apiFactory(options, environment)
 
 Expresso comes with a built-in webserver containing some preconfigured options that can be overridden following the [configuration options](#option-object).
 
-#### Usage
+#### simple Usage
 
 ```js
+const options = require('../config')
 const expresso = require('@expresso/expresso')
 const { auth, server } = require('@expresso/expresso')
 
@@ -343,4 +344,28 @@ const apiFactory = expresso((app, config) => {
 })
 
 server.start(appFactory, options)
+```
+
+#### Handling the server instance
+
+```js
+const options = require('../config')
+const socketio = require('socket.io')
+const expresso = require('@expresso/expresso')
+const { auth, server } = require('@expresso/expresso')
+
+const apiFactory = expresso((app, config) => {
+  const {jwt, scopes} = auth.factory(config.auth)
+  app.post('/your-path/:with-params', jwt, scopes(['yourapp.batch.read', 'yourapp.batch.write']), middleware)
+})
+
+const serverHandler = (server, config) => {
+    const io = socketio(server)
+
+    io.on('connection', function(socket){
+        console.log('a user connected');
+      });
+}
+
+server.start(app, options, serverHandler)
 ```
