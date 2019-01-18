@@ -9,6 +9,9 @@ const bodyParser = require('body-parser')
 const makeConfig = require('./makeConfig')
 const middlewares = require('./middlewares')
 
+/**
+ * @param  {Function} fn  Function to expresso user can handle the app express instance
+ */
 module.exports = (fn) => {
   return async (options, environment) => {
     if (environment !== env.TEST) {
