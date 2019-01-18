@@ -331,7 +331,7 @@ apiFactory(options, environment)
 
 Expresso comes with a built-in webserver containing some preconfigured options that can be overridden following the [configuration options](#option-object).
 
-#### simple Usage
+#### Usage
 
 ```js
 const options = require('../config')
