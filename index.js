@@ -13,6 +13,10 @@ const middlewares = require('./middlewares')
  * @param  {Function} fn  Function to expresso user can handle the app express instance
  */
 module.exports = (fn) => {
+ /**
+  * @param  {Object}   options     Config object.
+  * @param  {Object}   environment Enviment variables object.
+  */
   return async (options, environment) => {
     if (environment !== env.TEST) {
       process.on('unhandledRejection', (err) => {
