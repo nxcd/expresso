@@ -8,9 +8,10 @@ const makeConfig = require('./makeConfig')
 
 /**
  * @param  {Function} appFactory  App factory.
+ * @param  {Function} fn  Function to expresso user can handle the server instance
  * @param  {Object}   options     Config object.
  */
-const start = async (appFactory, options) => {
+const start = async (appFactory, fn,options) => {
   const config = merge(
     { server: { binding: { ip: env.get('SERVER_BINDING_IP', '0.0.0.0') } } },
     { server: { binding: { port: parseInt(env.get('SERVER_BINDING_PORT', 3000)) } } },
@@ -18,6 +19,8 @@ const start = async (appFactory, options) => {
   )
 
   const server = http.createServer(await appFactory(config, env.current))
+
+  await fn(server)
 
   server.on('listening', () => {
     const addr = server.address()
@@ -35,7 +38,6 @@ const start = async (appFactory, options) => {
     const { string: info } = cfonts.render(`${config.name} server listening at http://${addr.address}:${addr.port}`, {
       font: 'console',
       align: 'center',
-      // space: false,
       lineHeight: 1
     })
 
