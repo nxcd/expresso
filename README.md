@@ -1,3 +1,5 @@
+> **Warning**: This repository has been **deprecated** in favor of [Expresso@2.0](http://github.com/expresso/app). The whole app has been rewritten in Typescript with a lot of breaking changes, and also has been splitted into categories so you can download only the modules you want.
+
 # Expresso
 
 > Simple yet useful opinated express boilerplate as a module
